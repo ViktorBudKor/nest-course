@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Profile } from './authentication/entities/authentication.entity';
+import { Profile } from './db/entities/authentication.entity';
+import { BlogsModule } from './modules/blogs/blogs.module';
+import { SeedModule } from './seed/seed.module';
+import { Blog } from './db/entities/blog.entity';
+import { CategoryBlog } from './db/entities/categoryBlog.entity';
 
 @Module({
   imports: [
@@ -14,10 +18,12 @@ import { Profile } from './authentication/entities/authentication.entity';
       username: 'postgres',
       password: '123456',
       database: 'nest-course',
-      entities: [Profile],
+      entities: ['./dist/db/entities/*.{ts,js}'],
       synchronize: true,
     }),
     AuthenticationModule,
+    BlogsModule,
+    SeedModule,
   ],
 })
 export class AppModule {}

@@ -1,10 +1,15 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateAuthenticationDto } from './dto/create-authentication.dto';
 import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
 import { LogInAuthenticationDto } from './dto/LogIn-authentication.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Profile } from './entities/authentication.entity';
+import { Profile } from '../../db/entities/authentication.entity';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Injectable()
 export class AuthenticationService {
@@ -48,6 +53,8 @@ export class AuthenticationService {
       }
       return 'Вы вошли!';
     }
-    return 'Такого аккаунта не существует';
+    throw new UnauthorizedException(
+      'Пользователя с таким username не существует',
+    );
   }
 }
