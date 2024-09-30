@@ -10,13 +10,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { CreateAuthenticationDto } from './dto/create-authentication.dto';
-import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
-import { LogInAuthenticationDto } from './dto/LogIn-authentication.dto';
+import { CreateAuthenticationDto } from '../auth/dto/create-authentication.dto';
+import { UpdateAuthenticationDto } from '../auth/dto/update-authentication.dto';
+import { LogInAuthenticationDto } from '../auth/dto/LogIn-authentication.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('authentication')
-@ApiTags('Auth')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 

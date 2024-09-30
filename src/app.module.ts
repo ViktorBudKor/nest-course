@@ -8,7 +8,9 @@ import { BlogsModule } from './modules/blogs/blogs.module';
 import { SeedModule } from './seed/seed.module';
 import { Blog } from './db/entities/blog.entity';
 import { CategoryBlog } from './db/entities/categoryBlog.entity';
-
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthController } from './modules/auth/auth.controller';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -24,6 +26,8 @@ import { CategoryBlog } from './db/entities/categoryBlog.entity';
     AuthenticationModule,
     BlogsModule,
     SeedModule,
+    AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {}

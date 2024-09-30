@@ -3,9 +3,9 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateAuthenticationDto } from './dto/create-authentication.dto';
-import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
-import { LogInAuthenticationDto } from './dto/LogIn-authentication.dto';
+import { CreateAuthenticationDto } from '../auth/dto/create-authentication.dto';
+import { UpdateAuthenticationDto } from '../auth/dto/update-authentication.dto';
+import { LogInAuthenticationDto } from '../auth/dto/LogIn-authentication.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Profile } from '../../db/entities/authentication.entity';

@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAuthenticationDto {
@@ -11,4 +11,7 @@ export class CreateAuthenticationDto {
   @ApiProperty({ description: 'Confirm password ' })
   @IsString()
   confirmPassword: string;
+  // @ApiProperty({ description: 'Role id; ' })
+  // @IsNumber()
+  // roleID: number;
 }
