@@ -18,6 +18,8 @@ import { LogInAuthenticationDto } from './dto/LogIn-authentication.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
 // import { RoleAdminGuard } from './guards/admin-auth.guard';
 
 @Controller('auth')
@@ -45,6 +47,12 @@ export class AuthController {
   @Post('/login')
   async login(@Request() req) {
     return this.authService.login(req.user);
+  }
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(['admin'])
+  @Get()
+  async test(@Request() req) {
+    return { message: 1 };
   }
 
   @UseGuards(JwtAuthGuard)

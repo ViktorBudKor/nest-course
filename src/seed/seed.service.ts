@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CategoryBlog } from 'src/db/entities/categoryBlog.entity';
 import { Role } from 'src/db/entities/roles.entity';
+import { Status } from 'src/db/entities/status.entity';
 
 @Injectable()
 export class SeedService implements OnApplicationBootstrap {
@@ -11,6 +12,8 @@ export class SeedService implements OnApplicationBootstrap {
     private roleRepository: Repository<Role>,
     @InjectRepository(CategoryBlog)
     private categoryBlogRepository: Repository<CategoryBlog>,
+    @InjectRepository(Status)
+    private statusRepository: Repository<Status>,
   ) {}
 
   // Метод для автоматического запуска сидов при старте приложения
@@ -31,6 +34,11 @@ export class SeedService implements OnApplicationBootstrap {
     const roles = [
       this.roleRepository.create({ id: 1, name: 'Admin' }),
       this.roleRepository.create({ id: 2, name: 'User' }),
+    ];
+    const statuses = [
+      this.statusRepository.create({ id: 1, name: 'Under consideration' }),
+      this.statusRepository.create({ id: 2, name: 'Accepted' }),
+      this.statusRepository.create({ id: 3, name: 'Denied' }),
     ];
     await this.categoryBlogRepository.save(categories);
     await this.roleRepository.save(roles);

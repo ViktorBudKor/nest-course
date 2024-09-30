@@ -25,7 +25,7 @@ import { AuthController } from './modules/auth/auth.controller';
     }),
     AuthenticationModule,
     BlogsModule,
-    SeedModule,
+    //SeedModule,
     AuthModule,
     UsersModule,
   ],

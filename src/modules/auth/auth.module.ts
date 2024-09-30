@@ -10,10 +10,20 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Profile } from 'src/db/entities/authentication.entity';
 import { Role } from 'src/db/entities/roles.entity';
+import { APP_GUARD } from '@nestjs/core';
+// import { RolesGuard } from './guards/roles.guard';
 // import { RoleAdminStrategy } from './strategies/role-admin.strategy';
 
 @Module({
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
+  ],
   imports: [
     UsersModule,
     PassportModule,
