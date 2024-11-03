@@ -49,7 +49,7 @@ export class AuthController {
     return this.authService.login(req.user);
   }
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(['admin'])
+  @Roles('Admin')
   @Get()
   async test(@Request() req) {
     return { message: 1 };

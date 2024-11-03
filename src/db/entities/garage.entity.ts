@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
-  ManyToMany,
+  ManyToMany,JoinTable
 } from 'typeorm';
 import { Profile } from './authentication.entity';
 import { profile } from 'console';
@@ -14,19 +14,32 @@ import { Equipment } from './equipment.entity';
 export class Garage {
   @PrimaryGeneratedColumn()
   id: number;
-  @ManyToOne(() => Profile, (profile) => profile.id)
-  @JoinColumn({ name: 'Owner_id' })
+
+  // Связь с Profile
+  @ManyToOne(() => Profile, (profile) => profile.garages, { eager: true })
+  @JoinColumn({ name: 'owner_id' }) // Указываем внешний ключ
   owner: Profile;
-  @Column()
+
+  @Column({ unique: true })
   street: string;
+
   @Column()
   numberOfSpaces: number;
+
   @Column()
   price: number;
-  @ManyToOne(() => Status, (status) => status.id)
-  @JoinColumn({ name: 'Status_id' })
+
+  @Column()
+  isPublished: boolean;
+
+  // Связь с Status
+  @ManyToOne(() => Status, (status) => status.id, { eager: true })
+  @JoinColumn({ name: 'status_id' }) // Указываем внешний ключ для статуса
   status: Status;
-  @ManyToMany(() => Equipment, (equipment) => equipment.id)
-  @JoinColumn({ name: 'Equipment_id' })
+
+  // Связь с Equipment через ManyToMany
+  @ManyToMany(() => Equipment, (equipment) => equipment.garages, { eager: true })
+  @JoinTable() // ManyToMany связь использует JoinTable
   equipment: Equipment[];
 }
+

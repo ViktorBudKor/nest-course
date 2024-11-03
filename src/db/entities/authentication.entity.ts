@@ -6,6 +6,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Role } from './roles.entity';
+import { OneToMany } from 'typeorm';
+import { Garage } from './garage.entity';
 @Entity()
 export class Profile {
   @PrimaryGeneratedColumn()
@@ -20,4 +22,6 @@ export class Profile {
   @ManyToOne(() => Role, (role) => role.id, { eager: true })
   @JoinColumn({ name: 'role_id' })
   roleID: Role;
+  @OneToMany(() => Garage, (garage) => garage.owner)
+  garages: Garage[];
 }

@@ -14,4 +14,15 @@ export class UsersService {
       where: { username: username },
     });
   }
+  async findOneByID(id: number) {
+    return await this.profileRepository.findOne({
+      where: { id: id },
+    });
+  }
+  async getUserRole(username: string) {
+    const user = await this.profileRepository.findOne({
+      where: { username:username },
+    });
+    return user.roleID.name
+  }
 }

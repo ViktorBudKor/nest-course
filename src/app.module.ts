@@ -1,16 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Profile } from './db/entities/authentication.entity';
 import { BlogsModule } from './modules/blogs/blogs.module';
 import { SeedModule } from './seed/seed.module';
-import { Blog } from './db/entities/blog.entity';
-import { CategoryBlog } from './db/entities/categoryBlog.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
-import { AuthController } from './modules/auth/auth.controller';
+import { AdvertModule } from './modules/advert/advert.module';
+import { GarageModule } from './modules/garage/garage.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -25,9 +23,15 @@ import { AuthController } from './modules/auth/auth.controller';
     }),
     AuthenticationModule,
     BlogsModule,
-    //SeedModule,
+    SeedModule,
     AuthModule,
     UsersModule,
+    AdvertModule,
+    GarageModule,
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 10,
+    }]),
   ],
 })
 export class AppModule {}
