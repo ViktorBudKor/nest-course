@@ -10,9 +10,10 @@ import { JwtService } from '@nestjs/jwt';
 import { use } from 'passport';
 import { CreateAuthenticationDto } from './dto/create-authentication.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Profile } from 'src/db/entities/authentication.entity';
+import { User } from 'src/db/entities/authentication.entity';
 import { Repository } from 'typeorm';
 import { Role } from 'src/db/entities/roles.entity';
+import { Profile } from 'src/db/entities/profile.entity';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +22,8 @@ export class AuthService {
     private jwtService: JwtService,
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
+    @InjectRepository(User)
+    private UserRepository: Repository<User>,
     @InjectRepository(Profile)
     private ProfileRepository: Repository<Profile>,
   ) {}
@@ -32,28 +35,36 @@ export class AuthService {
       const userRole = await this.roleRepository.findOne({
         where: { id: roleID },
       });
-      const newProfile = this.ProfileRepository.create({
+      const newUser = this.UserRepository.create({
         username: username,
         password: password,
         roleID: userRole,
       });
-      const existingProfile = await this.ProfileRepository.findOne({
+      const existingProfile = await this.UserRepository.findOne({
         where: { username },
       });
       if (existingProfile) {
         return 'Пользователь с таким именем существует';
       }
-      const savedProfile = await this.ProfileRepository.save(newProfile);
+      const savedUser = await this.UserRepository.save(newUser);
+      const newProfile = await this.ProfileRepository.create({
+        userId:savedUser.id,
+        email: `${savedUser.username}@youremail.com`,
+        DOB:null,
+        sex:null
+
+      })
+      await this.ProfileRepository.save(newProfile)
       const payload = {
-        username: savedProfile.username,
-        sub: savedProfile.id,
-        role: savedProfile.roleID,
+        username: savedUser.username,
+        sub: savedUser.id,
+        role: savedUser.roleID,
       };
-      return { savedProfile, access_token: this.jwtService.sign(payload) };
+      return { username:savedUser.username,roleID, access_token: this.jwtService.sign(payload) };
     } else return 'Неверный пароль';
   }
   async getALL(user: any) {
-    const Profiles = await this.ProfileRepository.find();
+    const Profiles = await this.UserRepository.find();
     return Profiles;
   }
 

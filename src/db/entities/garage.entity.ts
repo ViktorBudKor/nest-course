@@ -6,8 +6,7 @@ import {
   JoinColumn,
   ManyToMany,JoinTable
 } from 'typeorm';
-import { Profile } from './authentication.entity';
-import { profile } from 'console';
+import { User } from './authentication.entity';
 import { Status } from './status.entity';
 import { Equipment } from './equipment.entity';
 @Entity()
@@ -15,10 +14,10 @@ export class Garage {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // Связь с Profile
-  @ManyToOne(() => Profile, (profile) => profile.garages, { eager: true })
+  // Связь с User
+  @ManyToOne(() => User, (user) => user.garages, { eager: true })
   @JoinColumn({ name: 'owner_id' }) // Указываем внешний ключ
-  owner: Profile;
+  owner: User;
 
   @Column({ unique: true })
   street: string;

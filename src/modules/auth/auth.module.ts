@@ -8,9 +8,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Profile } from 'src/db/entities/authentication.entity';
+import { User } from 'src/db/entities/authentication.entity';
 import { Role } from 'src/db/entities/roles.entity';
 import { APP_GUARD } from '@nestjs/core';
+import { Profile } from 'src/db/entities/profile.entity';
 // import { RolesGuard } from './guards/roles.guard';
 // import { RoleAdminStrategy } from './strategies/role-admin.strategy';
 
@@ -31,7 +32,7 @@ import { APP_GUARD } from '@nestjs/core';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '1d' },
     }),
-    TypeOrmModule.forFeature([Profile, Role]),
+    TypeOrmModule.forFeature([User , Role, Profile]),
   ],
   controllers: [AuthController],
   exports: [AuthService],

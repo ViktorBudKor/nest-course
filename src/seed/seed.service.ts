@@ -45,6 +45,7 @@ export class SeedService implements OnApplicationBootstrap {
     const roles = [
       this.roleRepository.create({ id: 1, name: 'Admin' }),
       this.roleRepository.create({ id: 2, name: 'User' }),
+      this.roleRepository.create({id:3, name:'Moderator'})
     ];
     await this.roleRepository.save(roles);
   }

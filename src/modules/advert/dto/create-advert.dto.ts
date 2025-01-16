@@ -10,11 +10,14 @@ export class CreateAdvertDto {
   numberOfSpaces: number;
   @ApiProperty({ description: 'Price of garage' })
   @IsNumber()
-  price:number;
-  @ApiProperty({ description: '1 - Проведено электричество, 2 - Яма для автомобиля, 3 - Проведена вода, 4 - Верстак' })
-  @IsNumber({},{each:true})
-  equipment: number [];
-
+  price: number;
+  @ApiProperty({
+    description:
+      '1 - Проведено электричество, 2 - Яма для автомобиля, 3 - Проведена вода, 4 - Верстак',
+    default: [1, 2, 3, 4],
+  })
+  @IsNumber({}, { each: true })
+  equipment: number[];
 }
 // owner: Profile;
 // @Column()

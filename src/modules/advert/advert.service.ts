@@ -3,7 +3,7 @@ import { CreateAdvertDto } from './dto/create-advert.dto';
 import { Garage } from 'src/db/entities/garage.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Profile } from 'src/db/entities/authentication.entity';
+import { User } from 'src/db/entities/authentication.entity';
 import { GarageService } from '../garage/garage.service';
 import { Status } from 'src/db/entities/status.entity';
 import { Equipment } from 'src/db/entities/equipment.entity';
@@ -16,8 +16,6 @@ export class AdvertService {
     private usersService: UsersService,
     @InjectRepository(Garage)
     private garageRepository: Repository<Garage>,
-    @InjectRepository(Profile)
-    private ProfileRepository: Repository<Profile>,
     @InjectRepository(Status)
     private StatusRepository: Repository<Status>,
     @InjectRepository(Equipment)

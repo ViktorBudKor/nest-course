@@ -11,6 +11,12 @@ async function bootstrap() {
     .setTitle('Auth,Blogs Swagger')
     .setDescription('The Auth API description')
     .setVersion('1.0')
+    .addApiKey({
+      type: "apiKey",
+      name: "Authorization",
+      in: "header", 
+      description: "Enter your token" 
+    }, 'X-AUTH-TOKEN')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
